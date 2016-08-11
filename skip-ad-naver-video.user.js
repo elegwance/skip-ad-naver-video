@@ -4,7 +4,7 @@
 // @version      0.1
 // @description  enjoy it
 // @author       me@elegwance.com
-// @match        *://*.naver.com/*/vod/index.nhn*
+// @include      *://*.naver.com/*/vod/index.nhn*
 // ==/UserScript==
 
 window.addEventListener('load', function() {
