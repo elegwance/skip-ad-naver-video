@@ -18,14 +18,12 @@ window.addEventListener('load', function() {
 
             skipAd();
 
-            console.log('reload video');
         }, 1000);
     }
 
     function skipAd() {
         var intervalId = setInterval(function() {
             var time = rmcPlayer.getCurrentTime();
-            console.log(time);
 
             if (typeof time == 'undefined' || !isNaN(time)) return;
 
@@ -33,7 +31,6 @@ window.addEventListener('load', function() {
             rmcPlayer.play();
             clearInterval(intervalId);
 
-            console.log('called skipAd');
         }, 1000);
     }
 
