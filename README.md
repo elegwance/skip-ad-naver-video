@@ -17,6 +17,7 @@
 1. [Tamper Monkey](https://tampermonkey.net/) 설치
 1. [스크립트](https://raw.githubusercontent.com/elegwance/skip-ad-naver-video/master/skip-ad-naver-video.user.js) 클릭
 
+
 ## 사용법
 
-자동으로 광고가 건너뛰기 됩니다. 아직 안되는 페이지가 있긴 합니다.
+자동으로 광고가 건너뛰기 됩니다. 네이버 데스크탑 버젼에서만 동작합니다.
