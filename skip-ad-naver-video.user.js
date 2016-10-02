@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Skip AD on Naver Video
 // @namespace    http://elegwance.com
-// @version      0.1
+// @version      0.2
 // @description  enjoy it
 // @author       me@elegwance.com
 // @include      *://*.naver.com/*/vod/index.nhn*
@@ -18,6 +18,7 @@ window.addEventListener('load', function() {
 
             skipAd();
 
+            console.log('reload video');
         }, 1000);
     }
 
@@ -25,12 +26,12 @@ window.addEventListener('load', function() {
         var intervalId = setInterval(function() {
             var time = rmcPlayer.getCurrentTime();
 
-            if (typeof time == 'undefined' || !isNaN(time)) return;
+            if (typeof time == 'undefined') return;
 
-            rmcPlayer.stop();
-            rmcPlayer.play();
+            rmcPlayer.init();
             clearInterval(intervalId);
 
+            console.log('called skipAd');
         }, 1000);
     }
 
