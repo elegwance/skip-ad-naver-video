@@ -1,39 +1,41 @@
 // ==UserScript==
 // @name         Skip AD on Naver Video
 // @namespace    http://elegwance.com
-// @version      0.2
+// @version      0.3
 // @description  enjoy it
 // @author       me@elegwance.com
 // @include      *://*.naver.com/*/vod/index.nhn*
 // ==/UserScript==
 
+$.cookie("fromAutoPlay", true);
+
 window.addEventListener('load', function() {
-    function reloadVideo() {
-        var intervalId = setInterval(function() {
-            if (typeof rmcPlayer == "undefined") return;
+    function checkNonSkip() {
+        console.log('checkNonSkip');
 
-            rmcPlayer.properties.advertiseUrl = '';
-            rmcPlayer.displayRMCPlayer(player);
-            clearInterval(intervalId);
+        if (rmcPlayer === null || !rmcPlayer.isPlaying()) {
+            console.log('not init rmcPlayer');
+            return;
+        }
 
-            skipAd();
+        if ($('.u_rmc_txt_nonskip').css('display') == 'block') {
+            rmcPlayer.displayPlayer(player);
+            console.log('nonskip video');
+            return;
+        }
 
-            console.log('reload video');
-        }, 1000);
+        skipAd();
+        clearInterval(intervalId);
     }
 
     function skipAd() {
-        var intervalId = setInterval(function() {
-            var time = rmcPlayer.getCurrentTime();
+        var $button = $('.u_rmc_btn_skip');
 
-            if (typeof time == 'undefined') return;
+        $button.css('display', 'block');
+        $button.trigger('click');
 
-            rmcPlayer.init();
-            clearInterval(intervalId);
-
-            console.log('called skipAd');
-        }, 1000);
+        console.log('skipAd');
     }
 
-    reloadVideo();
+    var intervalId = setInterval(checkNonSkip, 1000);
 }, false);
