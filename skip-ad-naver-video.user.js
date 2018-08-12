@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Skip AD on Naver Video
 // @namespace    http://elegwance.com
-// @version      0.4
+// @version      0.5
 // @description  enjoy it
 // @author       me@elegwance.com
 // @include      *://*.naver.com/*/vod/index.nhn*
@@ -9,11 +9,17 @@
 // ==/UserScript==
 
 window.addEventListener('load', function() {
-    function checkNonSkip() {
-        console.log('checkNonSkip');
+    var intervalId;
 
+    function skipHtml5() {
+        playerOptions.advertiseInfo = null;
+        playerOptions.advertiseUrl = null;
+        WrapPlayer.init(playerOptions);
+    }
+
+
+    function skipFlash() {
         if (rmcPlayer === null || !rmcPlayer.isPlaying()) {
-            console.log('not init rmcPlayer');
             return;
         }
 
@@ -21,23 +27,30 @@ window.addEventListener('load', function() {
         if (nonskip.length === 0) {
             return;
         }
+
         if (nonskip[0].style.display == 'block') {
             rmcPlayer.displayPlayer(player);
-            console.log('nonskip video');
             return;
         }
 
-        skipAd();
+        clickSkipButton();
         clearInterval(intervalId);
     }
 
-    function skipAd() {
+
+    function clickSkipButton() {
         var button = document.getElementsByClassName('u_rmc_btn_skip')[0];
 
         button.style.display = 'block';
         button.click();
-        console.log('skipAd');
     }
 
-    var intervalId = setInterval(checkNonSkip, 500);
+
+    if (typeof WrapPlayer !== 'undefined') {
+        // html5 video
+        skipHtml5();
+    } else {
+        // flash video
+        intervalId = setInterval(checkNonSkip, 500);
+    }
 }, false);
